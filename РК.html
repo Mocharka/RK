@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<title>РК</title>
+       <meta charset="UTF-8">
+	   
+	   <style>
+	   li {
+	   list-style-image: 
+	   
+	   
+	   
+	   
+	   
+	   }
+	   
+	   
+	   
+	   
+	   </style>
+	   
+	   
+	   
+	   
+	   
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<form>
+            
+            <input type="button" id="but1" value="Создать">
+            <br><br>
+            <input type="button" id="but2" value="Переименовать">
+            <br><br>
+            <input type="button" id="but3" value="Удалить">
+</form>
+
+<ul id = "main">
+ <li>Корневой элемент
+      <ul id = "one">
+        <li>1
+          <ul>
+            <li>1.1</li>
+          </ul>
+        </li>
+        <li>2
+          <ul id = "two">
+            <li>2.2</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+</ul>
+
+<script>
+
+for ( let li of main.querySelectorAll('li')) {
+let span = document.createElement('span');
+li.prepend(span);
+span.append(span.nextSibling)
+}
+
+main.onclick = function (event) {
+
+let cont = event.target.parentNode.querySelector('ul');
+
+cont.hidden = !cont.hidden;
+
+if (!cont) return;
+
+if (event.target.tagName != 'SPAN') return;
+
+}
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
