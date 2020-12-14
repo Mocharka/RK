@@ -5,38 +5,14 @@
        <meta charset="UTF-8">
 	   
 	   <style>
-	   li {
-	   list-style-image: 
-	   
-	   
-	   
-	   
-	   
-	   }
-	   
-	   
-	   
-	   
+li {
+list-style-type: none;
+}   
 	   </style>
-	   
-	   
-	   
-	   
 	   
 </head>
 <body>
-
-
-
-
-
-
-
-
-
-
-
-
+<h1>Дерево</h1>
 
 <form>
             
@@ -52,11 +28,11 @@
       <ul id = "one">
         <li>1
           <ul>
-            <li>1.1</li>
+            <li>1.1<ul><li>1.1.1</li></ul></li>
           </ul>
         </li>
         <li>2
-          <ul id = "two">
+          <ul>
             <li>2.2</li>
           </ul>
         </li>
@@ -66,30 +42,99 @@
 
 <script>
 
-for ( let li of main.querySelectorAll('li')) {
+
+for ( let li of main.querySelectorAll('li')) {			//Заключаем все элементы в строки
 let span = document.createElement('span');
 li.prepend(span);
-span.append(span.nextSibling)
+span.append(span.nextSibling);
+span.style.listStyle = 'none';
+span.style.background= " url(minus.png) no-repeat";
+span.style.paddingLeft= "20px";
 }
 
-main.onclick = function (event) {
+main.onclick = function (e) {							 //Прячем всех детей 
 
-let cont = event.target.parentNode.querySelector('ul');
-
-cont.hidden = !cont.hidden;
-
+if (e.target.tagName != 'SPAN') return;
+let cont = e.target.parentNode.querySelector('ul');
 if (!cont) return;
+cont.hidden = !cont.hidden;
+if (cont.hidden) {                                      //Меняем картинку
+e.target.style.background= "none";
+e.target.style.listStyle = 'none';
+e.target.style.background= " url(plus.png) no-repeat";
+e.target.style.paddingLeft= "20px";
 
-if (event.target.tagName != 'SPAN') return;
-
+} 
+if (!cont.hidden) {										//Меняем картинку 
+e.target.style.background= "none";
+e.target.style.listStyle = 'none';
+e.target.style.background= " url(minus.png) no-repeat";
+e.target.style.paddingLeft= "20px";
+}
 }
 
+let x1 = 0;                                             //Проверяем выделение
+let x2 = 0;                                
+let y1 = 0;
+let y2 = 0;  
+let a = 0;
+let b = 0;
+document.body.onmousedown = function(e) {
+x1 = e.pageX;
+y1 = e.pageY;
+}
+document.body.onmouseup = function(e) {
+x2 = e.pageX;
+y2 = e.pageY;
+
+if ((Math.abs(y1 - y2) < 10)&& (Math.abs(x1-x2) > 8) ){ a = e.target};  //Находим элемент, который выделили
+};
+ 
+ document.body.ondblclick = function(e) {
+ a = e.target
+ }
+ 
+ 
+document.getElementById('but2').onclick = function(){       //Делаем кнопку "Переименовать";
+      let txt = prompt('Введите новое слово');                               
+         var clos = a.closest('li');
+			var	children = clos.firstChild;
+				
+				children.innerHTML=txt;
+                }
 
 
+document.getElementById('but1').onclick = function(){  		//Делаем кнопку "Добавить";
+     let txt = prompt('Ввведите название');
+	   var clos = a.closest('li');
+		 var li = document.createElement('li');
+		 var ul = document.createElement('ul');
+		
+			var children1 = clos.lastElementChild;
+			var children2 = children1.lastElementChild;
+			var zap = children2;
+			if (children2 == null) {clos.appendChild(ul)};
+			var children1 = clos.lastElementChild;
+			
+			
+			children1.appendChild(li);
+			var children3 = children1.lastElementChild;
+			children3.innerHTML = txt;
+			
+let span = document.createElement('span');
+children3.prepend(span);
+span.append(span.nextSibling);
+span.style.listStyle = 'none';
+span.style.background= " url(minus.png) no-repeat";
+span.style.paddingLeft= "20px"; 
+}
+ 
+ 
+document.getElementById('but3').onclick = function(){         //Делаем кнопку "Удалить";
+        var clos = a;                        
+         clos.parentNode.remove(clos);
 
-
-
-
+}
 
 </script>
 </body>
