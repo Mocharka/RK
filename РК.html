@@ -7,7 +7,15 @@
 	   <style>
 li {
 list-style-type: none;
+
 }   
+
+span {
+cursor: pointer;
+}
+
+
+
 	   </style>
 	   
 </head>
@@ -43,68 +51,72 @@ list-style-type: none;
 <script>
 
 
-for ( let li of main.querySelectorAll('li')) {			//Заключаем все элементы в строки
+
+for ( let li of main.querySelectorAll('li')) {			
 let span = document.createElement('span');
+let img = document.createElement ('img');
+img.setAttribute('src', 'minus.png');
 li.prepend(span);
+
 span.append(span.nextSibling);
-span.style.listStyle = 'none';
-span.style.background= " url(minus.png) no-repeat";
-span.style.paddingLeft= "20px";
+li.prepend(img);
 }
 
-main.onclick = function (e) {							 //Прячем всех детей 
-
-if (e.target.tagName != 'SPAN') return;
+main.onclick = function (e) {							
+if (e.target.tagName != 'IMG') return;
 let cont = e.target.parentNode.querySelector('ul');
 if (!cont) return;
 cont.hidden = !cont.hidden;
-if (cont.hidden) {                                      //Меняем картинку
-e.target.style.background= "none";
-e.target.style.listStyle = 'none';
-e.target.style.background= " url(plus.png) no-repeat";
-e.target.style.paddingLeft= "20px";
 
-} 
-if (!cont.hidden) {										//Меняем картинку 
-e.target.style.background= "none";
-e.target.style.listStyle = 'none';
-e.target.style.background= " url(minus.png) no-repeat";
-e.target.style.paddingLeft= "20px";
+if (cont.hidden) {
+
+let d = e.target;
+let clos = d.closest('li');
+clos.removeChild(d);
+let img = document.createElement ('img');
+img.setAttribute('src', 'plus.png');
+clos.prepend(img);
+}
+
+if (!cont.hidden) {
+
+let d = e.target;
+let clos = d.closest('li');
+clos.removeChild(d);
+let img = document.createElement ('img');
+img.setAttribute('src', 'minus.png');
+clos.prepend(img);
 }
 }
 
-let x1 = 0;                                             //Проверяем выделение
-let x2 = 0;                                
-let y1 = 0;
-let y2 = 0;  
+
 let a = 0;
 let b = 0;
-document.body.onmousedown = function(e) {
-x1 = e.pageX;
-y1 = e.pageY;
-}
-document.body.onmouseup = function(e) {
-x2 = e.pageX;
-y2 = e.pageY;
+let q = 0;
 
-if ((Math.abs(y1 - y2) < 10)&& (Math.abs(x1-x2) > 8) ){ a = e.target};  //Находим элемент, который выделили
-};
+document.body.onclick = function (e){
+
+for ( let span of main.querySelectorAll('span')) {	
+span.style.backgroundColor = 'white';
+	
+}
+
+if (e.target.tagName != 'SPAN') return;
+e.target.style.backgroundColor = '#00CCFF';
+a = e.target;
+}
  
- document.body.ondblclick = function(e) {
- a = e.target
- }
  
- 
-document.getElementById('but2').onclick = function(){       //Делаем кнопку "Переименовать";
+document.getElementById('but2').onclick = function(){       
       let txt = prompt('Введите новое слово');                               
          var clos = a.closest('li');
-			var	children = clos.firstChild;
+			var	children = clos.firstChild.nextSibling;
 				
 				children.innerHTML=txt;
                 }
 
 
-document.getElementById('but1').onclick = function(){  		//Делаем кнопку "Добавить";
+document.getElementById('but1').onclick = function(){  		
      let txt = prompt('Ввведите название');
 	   var clos = a.closest('li');
 		 var li = document.createElement('li');
@@ -124,13 +136,17 @@ document.getElementById('but1').onclick = function(){  		//Делаем кноп
 let span = document.createElement('span');
 children3.prepend(span);
 span.append(span.nextSibling);
-span.style.listStyle = 'none';
-span.style.background= " url(minus.png) no-repeat";
-span.style.paddingLeft= "20px"; 
+ 
+let img = document.createElement ('img');
+img.setAttribute('src', 'minus.png');
+li.prepend(span);
+
+span.append(span.nextSibling);
+li.prepend(img);
 }
  
  
-document.getElementById('but3').onclick = function(){         //Делаем кнопку "Удалить";
+document.getElementById('but3').onclick = function(){        
         var clos = a;                        
          clos.parentNode.remove(clos);
 
